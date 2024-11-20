@@ -1,0 +1,318 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Number formatting */
+.number-display {
+  @apply tabular-nums font-mono;
+  min-width: 4ch;
+  text-align: right;
+}
+
+.number-display-tooltip {
+  @apply absolute invisible group-hover:visible 
+         bg-gray-800 text-white px-2 py-1 rounded text-sm
+         -translate-y-full -translate-x-1/2 left-1/2 top-0
+         whitespace-nowrap;
+}
+
+/* Settings specific styles */
+.settings-tabs {
+  @apply flex flex-col h-full;
+}
+
+.settings-tab-list {
+  @apply flex space-x-2 border-b border-gray-200 px-4;
+}
+
+.settings-tab-trigger {
+  @apply px-4 py-2 text-sm font-medium text-gray-600 
+         hover:text-gray-900 cursor-pointer
+         border-b-2 border-transparent
+         data-[state=active]:border-blue-500
+         data-[state=active]:text-blue-600;
+}
+
+.settings-tab-content {
+  @apply py-4 flex-1 overflow-y-auto;
+}
+
+.settings-footer {
+  @apply sticky bottom-0 bg-white border-t border-gray-200
+         px-4 py-3 flex justify-end space-x-3
+         shadow-[0_-2px_4px_rgba(0,0,0,0.1)];
+}
+
+.settings-save-alert {
+  @apply fixed top-4 right-4 flex items-center p-2
+         bg-green-50 text-green-700 rounded-md
+         shadow-lg transform transition-all
+         duration-500 ease-in-out;
+}
+
+/* Basic animations */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+.animate-fade-out {
+  animation: fadeOut 3s ease-out forwards;
+  -webkit-animation: fadeOut 3s ease-out forwards;
+}
+@keyframes fall {
+  0% {
+    transform: translateY(-20px) rotate(45deg);
+  }
+  100% {
+    transform: translateY(100vh) rotate(405deg);
+  }
+}
+
+/* Coin Rain */
+@keyframes coinFall {
+  0% {
+    transform: translateY(-50px) rotateY(0deg);
+  }
+  100% {
+    transform: translateY(100vh) rotateY(1080deg);
+  }
+}
+
+.coin {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle at 30% 30%, #ffd700, #ffa500);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  z-index: 40;
+  animation: coinFall linear forwards;
+}
+
+/* Fireworks */
+@keyframes explode {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.firework-container {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.firework-spark {
+  position: absolute;
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    rgba(255,215,0,1) 0%,
+    rgba(255,215,0,0.5) 50%,
+    rgba(255,215,0,0) 100%
+  );
+  transform-origin: 0 50%;
+  animation: explode 1s ease-out forwards;
+}
+
+/* Star Burst */
+@keyframes starburstAnim {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+.starburst {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  width: 150px;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    rgba(255,223,0,1) 0%,
+    rgba(255,223,0,0.5) 50%,
+    rgba(255,223,0,0) 100%
+  );
+  transform-origin: 0 50%;
+  animation: starburstAnim 1.5s ease-out forwards;
+}
+
+/* Glowing Aura */
+@keyframes glowPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+}
+
+.glow-aura {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, 
+    rgba(255,223,0,0.8) 0%, 
+    rgba(255,223,0,0) 70%
+  );
+  animation: glowPulse 2s ease-in-out infinite;
+  z-index: 40;
+}
+
+/* Victory Text */
+@keyframes bounceText {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) scale(1) translateX(-50%);
+  }
+  40% {
+    transform: translateY(-30px) scale(1.1) translateX(-50%);
+  }
+  60% {
+    transform: translateY(-15px) scale(1.05) translateX(-50%);
+  }
+}
+
+.victory-text {
+  font-size: 48px;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  animation: bounceText 2s ease-in-out;
+  z-index: 40;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Batch processing overlay animation */
+@keyframes progressPulse {
+  0% {
+    background-color: rgba(59, 130, 246, 0.1);
+  }
+  50% {
+    background-color: rgba(59, 130, 246, 0.2);
+  }
+  100% {
+    background-color: rgba(59, 130, 246, 0.1);
+  }
+}
+
+.batch-processing-overlay {
+  animation: progressPulse 1s ease-in-out infinite;
+}
